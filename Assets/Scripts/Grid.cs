@@ -8,13 +8,18 @@ public class Grid: MonoBehaviour
     Node[,] grid;
 
     public List<Node> path;
-
+    public bool gridOn = false;
     public LayerMask unwalkableLayerMask;
     public Vector2 gridWorldSize;
     public float nodeRadius;
-
+    
     float nodeDiameter;
     int gridSizeX, gridSizeY; // the number of nodes along the X,Y axis of the grid
+
+    public int maxHeapSize
+    {
+        get { return gridSizeX * gridSizeY; }
+    }
 
     [Header("Visualization")]
     public Transform player;
@@ -81,16 +86,23 @@ public class Grid: MonoBehaviour
 
         if (grid != null)
         {
-            Node playerNode = NodeFromWorldPoint(player.position);
-            foreach (var n in grid)
-            {
-                Gizmos.color = (n.walkable) ? Color.white : Color.red;
-                if (path != null)
-                {
-                    if (path.Contains(n)) Gizmos.color = Color.black;
+            if (gridOn){
+                Node playerNode = NodeFromWorldPoint(player.position);
+                foreach (var n in grid){
+                    Gizmos.color = (n.walkable) ? Color.white : Color.red;
+                    if (path != null)
+                        if (path.Contains(n)) Gizmos.color = Color.black;
+                    if (playerNode == n) Gizmos.color = Color.cyan;
+                    Gizmos.DrawCube(n.worldPos, Vector3.one * (nodeDiameter - 0.1f));
                 }
-                if (playerNode == n) Gizmos.color = Color.cyan;
-                Gizmos.DrawCube(n.worldPos, Vector3.one * (nodeDiameter - 0.1f));
+            }
+            else {
+                Gizmos.color = Color.black;
+                foreach (var n in grid) {
+                    if (path != null)
+                        if (path.Contains(n))
+                            Gizmos.DrawCube(n.worldPos, Vector3.one * (nodeDiameter - 0.1f));
+                }
             }
         }
     }
