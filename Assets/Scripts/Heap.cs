@@ -44,7 +44,13 @@ public class Heap<T> where T : IHeapItem<T>{
 
     private void SortDown(T item)
     {
-        while (true) {
+        // it would be more intuitive to say "while (hasLeftChild(index))"
+        // because item is being updated during the process
+        // it has to repeat until two requirements are meet:
+        // 1. no children: leftChildIndex > currentItemCount
+        // 2. no children with higher priority: items[swapIndex].CompareTo(item) < 0
+        while (true)
+        {
             int leftChildIndex = item.HeapIndex * 2 + 1;
             int rightChildIndex = item.HeapIndex * 2 + 2;
             if (leftChildIndex < currentItemCount)
@@ -56,7 +62,7 @@ public class Heap<T> where T : IHeapItem<T>{
 
                 if (items[swapIndex].CompareTo(item) > 0)
                     Swap(item, items[swapIndex]);
-                else 
+                else
                     break;
             }
             else
@@ -67,6 +73,7 @@ public class Heap<T> where T : IHeapItem<T>{
     }
 
     private void SortUp(T item){
+        // the reason for using while true loop here is similar to SortDown() as explained above
         while (true) {
             int parentIndex = (item.HeapIndex - 1) / 2;
             if (item.CompareTo(items[parentIndex]) > 0) // higher priority
