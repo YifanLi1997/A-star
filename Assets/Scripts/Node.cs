@@ -9,6 +9,7 @@ public class Node:IHeapItem<Node>
     public int gridX;
     public int gridY;
     public int heapIndex;
+    public int movementPenalty;
 
     public Node parent;
 
@@ -26,12 +27,13 @@ public class Node:IHeapItem<Node>
         set { heapIndex = value; }
     }
 
-    public Node(bool _walkable, Vector3 _worldPos, int _x, int _y)
+    public Node(bool _walkable, Vector3 _worldPos, int _x, int _y, int _penalty)
     {
         walkable = _walkable;
         worldPos = _worldPos;
         gridX = _x;
         gridY = _y;
+        movementPenalty = _penalty;
     }
 
     public int CompareTo(Node obj)

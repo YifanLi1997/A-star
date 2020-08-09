@@ -102,7 +102,7 @@ public class PathFinding : MonoBehaviour
                 {
                     if (!neighbor.walkable || closedSet.Contains(neighbor)) continue;
 
-                    int newMovementCostToNeighbor = currentNode.gCost + GetDistance(currentNode, neighbor);
+                    int newMovementCostToNeighbor = currentNode.gCost + GetDistance(currentNode, neighbor) + currentNode.movementPenalty;
                     if (newMovementCostToNeighbor < neighbor.gCost || !openSet.Contains(neighbor))
                     {
                         neighbor.gCost = newMovementCostToNeighbor;
@@ -110,9 +110,9 @@ public class PathFinding : MonoBehaviour
                         neighbor.parent = currentNode;
 
                         if (!openSet.Contains(neighbor))
-                        {
                             openSet.Add(neighbor);
-                        }
+                        else
+                            openSet.UpdateItem(neighbor);
                     }
                 }
             }
