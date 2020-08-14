@@ -113,9 +113,9 @@ public class Grid : MonoBehaviour
         {
             Node playerNode = NodeFromWorldPoint(player.position);
             foreach (var n in grid) {
-                //Gizmos.color = Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(0, 10, n.movementPenalty));
-                //Gizmos.color = (n.walkable) ? Gizmos.color : Color.red;
-                Gizmos.color = (n.walkable) ? Color.white : Color.red;
+                Gizmos.color = Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(0, 10, n.movementPenalty));
+                Gizmos.color = (n.walkable) ? Gizmos.color : Color.red;
+                //Gizmos.color = (n.walkable) ? Color.white : Color.red;
                 if (playerNode == n) Gizmos.color = Color.cyan;
                 Gizmos.DrawCube(n.worldPos, Vector3.one * (nodeDiameter));
             }
